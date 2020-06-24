@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    image: ngoduykhanh/powerdns-admin:latest
+    image: roei/powerdns_admin:14
     container_name: powerdns_admin
     ports:
       - "9191:80"
@@ -11,8 +11,18 @@ services:
       options:
         max-size: 50m
     environment:
-      - SQLALCHEMY_DATABASE_URI=mysql://pda:changeme@host.docker.internal/pda
-      - GUNICORN_TIMEOUT=60
+      #- SQLALCHEMY_DATABASE_URI=postgresql://powerdnsadmin:qwe123@192.168.10.140/powerdnsadmindb
+      - SQLALCHEMY_DATABASE_URI=mysql://powerdnsadmin:qwe123@192.168.10.140/powerdnsadmin
+      - GUINCORN_TIMEOUT=60
       - GUNICORN_WORKERS=2
       - GUNICORN_LOGLEVEL=DEBUG
-      - OFFLINE_MODE=False # True for offline, False for external resources
+      - OFFLINE_MODE=True
+    network_mode: host
+# Check restart policy
+    volumes:
+      - "/etc/pki/ca-trust/source/anchors/cacert.pem:/usr/lib/python3.8/site-packages/certifi/cacert.pem"
+      #- "/root/roei-pdnsadmin/powerdnsadmin/routes:/app/powerdnsadmin/routes"
+      #- "/root/roei-pdnsadmin/powerdnsadmin/models:/app/powerdnsadmin/models"
+      #- "/root/roei-pdnsadmin/powerdnsadmin/templates:/app/powerdnsadmin/templates"
+      #- "/root/roei-pdnsadmin/idfcts-favi.png:/app/powerdnsadmin/static/img/favicon.png"
+      #- "/root/roei-pdnsadmin/test.css:/app/powerdnsadmin/static/img/test.css"

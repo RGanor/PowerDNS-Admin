@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Register - {{ SITE_NAME }}</title>
+  <link rel="icon" href="/static/img/favicon.png">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   {% assets "css_login" -%}
@@ -84,7 +85,7 @@
     <!-- /.form-box -->
     <div class="login-box-footer">
       <center>
-        <p>Powered by <a href="https://github.com/ngoduykhanh/PowerDNS-Admin">PowerDNS-Admin</a></p>
+        <p>Powered by <a href="{{ SETTING.get('powered_by_url') }}">{{ SETTING.get('powered_by_name') }}</a></p>
       </center>
     </div>
   </div>

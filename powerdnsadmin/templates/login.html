@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Log In - {{ SITE_NAME }}</title>
+  <link rel="icon" href="/static/img/favicon.png">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   {% assets "css_login" -%}
@@ -20,10 +21,12 @@
 </head>
 
 <body class="hold-transition login-page">
-  <div class="login-box">
-    <div class="login-logo">
-      <a href="{{ url_for('index.index') }}"><b>PowerDNS</b>-Admin</a>
-    </div>
+  <div class="split left">
+      <div class="login-container">
+        <div class="login-box">
+         <div class="login-logo">
+          <a href="{{ url_for('index.index') }}">{{ SETTING.get('site_brand') }}</a>
+        </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
       {% if error %}
@@ -45,9 +48,11 @@
             data-error="Please input your password" required {% if password %}value="{{ password }}" {% endif %}>
           <span class="help-block with-errors"></span>
         </div>
+        {% if SETTING.get('otp_enabled') %}
         <div class="form-group">
           <input type="otptoken" class="form-control" placeholder="OTP Token" name="otptoken">
         </div>
+        {% endif %}
         {% if SETTING.get('ldap_enabled') and SETTING.get('local_db_enabled') %}
         <div class="form-group">
           <select class="form-control" name="auth_method">
@@ -133,9 +138,23 @@
     <!-- /.login-box-body -->
     <div class="login-box-footer">
       <center>
-        <p>Powered by <a href="https://github.com/ngoduykhanh/PowerDNS-Admin">PowerDNS-Admin</a></p>
+        <p>Powered by <a href="{{ SETTING.get('powered_by_url') }}">{{ SETTING.get('powered_by_name') }}</a></p>
       </center>
     </div>
+    </div>
+  </div>
+  </div>
+    <div class="split right" style="
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    left: auto;
+">
+      
+<img id="login-img" data-type="image" itemprop="image" src="/static/img/login.png" style="width: 600px;height: 462px;object-fit: none;margin-top: 5%;margin-left: 10%;">
+    </div>
+  </div>
   </div>
   <!-- /.login-box -->
 

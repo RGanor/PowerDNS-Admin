@@ -17,6 +17,7 @@ css_login = Bundle('node_modules/bootstrap/dist/css/bootstrap.css',
                    'node_modules/ionicons/dist/css/ionicons.css',
                    'node_modules/icheck/skins/square/blue.css',
                    'node_modules/admin-lte/dist/css/AdminLTE.css',
+                   'custom/css/login.css',
                    filters=('cssmin', 'cssrewrite'),
                    output='generated/login.css')
 

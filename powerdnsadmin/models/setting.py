@@ -92,6 +92,11 @@ class Setting(db.Model):
         'oidc_oauth_firstname': 'given_name',
         'oidc_oauth_last_name': 'family_name ',
         'oidc_oauth_email': 'email',
+        'site_brand': 'PowerDNS-Admin',
+        'site_brand_short': 'PDA',
+        'otp_enabled': True,
+        'powered_by_url': 'https://github.com/ngoduykhanh/PowerDNS-Admin',
+        'powered_by_name': 'PowerDNS-Admin',
         'forward_records_allow_edit': {
             'A': True,
             'AAAA': True,

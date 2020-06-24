@@ -39,9 +39,9 @@
     <!-- Logo -->
     <a href="{{ url_for('index.index') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>PD</b>A</span>
+      <span class="logo-mini">{{ SETTING.get('site_brand_short') }}</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>PowerDNS</b>-Admin</span>
+      <span class="logo-lg">{{ SETTING.get('site_brand') }}</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -175,7 +175,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong><a href="https://github.com/ngoduykhanh/PowerDNS-Admin">PowerDNS-Admin</a></strong> - A PowerDNS web interface with advanced features.
+    Powered by <strong><a href="{{ SETTING.get('powered_by_url') }}">{{ SETTING.get('powered_by_name') }}</a></strong>
   </footer>
 </div>
 <!-- ./wrapper -->

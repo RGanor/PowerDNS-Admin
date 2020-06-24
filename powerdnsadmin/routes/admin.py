@@ -501,7 +501,8 @@ def setting_basic():
             'pretty_ipv6_ptr', 'dnssec_admins_only',
             'allow_user_create_domain', 'bg_domain_updates', 'site_name',
             'session_timeout', 'warn_session_timeout', 'ttl_options',
-            'pdns_api_timeout', 'verify_ssl_connections', 'verify_user_email'
+            'pdns_api_timeout', 'verify_ssl_connections', 'verify_user_email', 'site_brand',
+            'site_brand_short', 'otp_enabled', 'powered_by_url', 'powered_by_name'
         ]
 
         return render_template('admin_setting_basic.html', settings=settings)
