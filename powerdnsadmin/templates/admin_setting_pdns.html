@@ -54,6 +54,19 @@
                                 data-error="Please input PowerDNS version" required value="{{ pdns_version }}">
                             <span class="help-block with-errors"></span>
                         </div>
+                        <div class="form-group has-feedback">
+                            <label class="control-label" for="recursor_servers">Recursor API URL</label>
+                            <input type="text" class="form-control" placeholder="Recursor API url" name="recursor_servers"
+                                data-error="Please input a valid Recursor API URL" required value="{{ recursor_servers }}">
+                            <span class="help-block with-errors"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="control-label" for="recursor_api_key">Recursor API KEY</label>
+                            <input type="password" class="form-control" placeholder="Recursor API key"
+                                name="recursor_api_key" data-error="Please input a valid Recursor API key" required
+                                value="{{ recursor_api_key }}">
+                            <span class="help-block with-errors"></span>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-flat btn-primary">Update</button>

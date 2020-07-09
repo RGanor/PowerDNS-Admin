@@ -53,6 +53,8 @@ class Domain(db.Model):
         # PDNS configs
         self.PDNS_STATS_URL = Setting().get('pdns_api_url')
         self.PDNS_API_KEY = Setting().get('pdns_api_key')
+        self.RECURSOR_SERVERS = Setting().get('recursor_servers')
+        self.RECURSOR_API_KEY = Setting().get('recursor_api_key')
         self.PDNS_VERSION = Setting().get('pdns_version')
         self.API_EXTENDED_URL = utils.pdns_api_extended_uri(self.PDNS_VERSION)
 
@@ -203,7 +205,9 @@ class Domain(db.Model):
             soa_edit_api,
             domain_ns=[],
             domain_master_ips=[],
-            account_name=None):
+            account_name=None,
+            recursion=False,
+            rec_auth_list=[]):
         """
         Add a domain to power dns
         """
@@ -243,6 +247,9 @@ class Domain(db.Model):
                     return {'status': 'error', 'msg': 'Domain already exists'}
                 return {'status': 'error', 'msg': jdata['error']}
             else:
+                if recursion:
+                    self.add_recursive(domain_name,rec_auth_list)
+
                 current_app.logger.info(
                     'Added domain successfully to PowerDNS: {0}'.format(
                         domain_name))
@@ -253,6 +260,33 @@ class Domain(db.Model):
                 domain_name, e))
             current_app.logger.debug(traceback.format_exc())
             return {'status': 'error', 'msg': 'Cannot add this domain.'}
+
+    def add_recursive(self, domain_name, rec_auth_list):
+        headers = {'X-API-Key': self.RECURSOR_API_KEY}
+        current_app.logger.info("Recursive")
+        post_data = { 
+            "id": domain_name[:-1], 
+            "kind": "Forwarded",
+            "name": domain_name,
+            "recursion_desired": True,
+            "servers": rec_auth_list,
+            "url": "/api/v1/servers/localhost/zones/{0}".format(domain_name[:-1])
+            }
+        current_app.logger.info(post_data)
+
+        try:
+            for server in self.RECURSOR_SERVERS.split(","):
+                jdata = utils.fetch_json(
+                    "http://{0}:8082/api/v1/servers/localhost/zones".format(server),
+                    headers=headers,
+                    method='POST',
+                    data=post_data)
+                if 'error' in jdata.keys():
+                    current_app.logger.error(jdata['error'])
+        except Exception as e:
+            current_app.logger.error('Cannot add recursive domain {0} {1}'.format(
+                domain_name, e))
+            current_app.logger.debug(traceback.format_exc())
 
     def add_domain_to_powerdns_admin(self, domain=None, domain_dict=None, do_commit=True):
         """

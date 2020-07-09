@@ -41,6 +41,25 @@
                             {% endfor %}
                         </select><br />
                         <div class="form-group">
+                            <label>Recursion</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="radio_rec" id="radio_rec_yes" value="yes">
+                                    Yes
+                                </label>
+                                &nbsp;&nbsp;&nbsp;
+                                <label>
+                                    <input type="radio" name="radio_rec" id="radio_rec_no" value="no" checked> 
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-group" style="display: none;" id="rec_address_div">
+                                <input type="text" class="form-control" name="rec_address"
+                                    id="rec_address"
+                                    placeholder="Enter valid authoratives ip addresses (separated by commas)">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Type</label>
                             <div class="radio">
                                 <label>
@@ -176,5 +195,15 @@
             $("#domain_master_address_div").hide();
         }
     });
+
+    $("input[name=radio_rec]").change(function () {
+        var rec = $(this).val();
+        if (rec == "yes") {
+            $("#rec_address_div").show();
+        } else {
+            $("#rec_address_div").hide();
+        }
+    });
+
 </script>
 {% endblock %}

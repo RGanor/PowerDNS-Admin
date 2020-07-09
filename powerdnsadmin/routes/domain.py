@@ -142,11 +142,23 @@ def add():
             domain_template = request.form.getlist('domain_template')[0]
             soa_edit_api = request.form.getlist('radio_type_soa_edit_api')[0]
             account_id = request.form.getlist('accountid')[0]
+            recursion = request.form.getlist('radio_rec')[0]
 
             if ' ' in domain_name or not domain_name or not domain_type:
                 return render_template(
                     'errors/400.html',
                     msg="Please enter a valid domain name"), 400
+
+            if recursion == 'yes':
+                recursion = True
+                if request.form.getlist('rec_address'):
+                    rec_auth_list = request.form.getlist(
+                        'rec_address')[0]
+                    rec_auth_list = rec_auth_list.replace(
+                        ' ', '')
+                    rec_auth_list = rec_auth_list.split(',')
+            else:
+                rec_auth_list = []
 
             #TODO: Validate ip addresses input
             if domain_type == 'slave':
@@ -166,7 +178,10 @@ def add():
                            domain_type=domain_type,
                            soa_edit_api=soa_edit_api,
                            domain_master_ips=domain_master_ips,
-                           account_name=account_name)
+                           account_name=account_name,
+                           recursion=recursion,
+                           rec_auth_list=rec_auth_list)
+                           
             if result['status'] == 'ok':
                 history = History(msg='Add domain {0}'.format(domain_name),
                                   detail=str({

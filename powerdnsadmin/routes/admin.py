@@ -556,25 +556,32 @@ def setting_pdns():
     if request.method == 'GET':
         pdns_api_url = Setting().get('pdns_api_url')
         pdns_api_key = Setting().get('pdns_api_key')
+        recursor_servers = Setting().get('recursor_servers')
+        recursor_api_key = Setting().get('recursor_api_key')
         pdns_version = Setting().get('pdns_version')
         return render_template('admin_setting_pdns.html',
                                pdns_api_url=pdns_api_url,
                                pdns_api_key=pdns_api_key,
-                               pdns_version=pdns_version)
+                               pdns_version=pdns_version,
+                               recursor_api_key=recursor_api_key,
+                               recursor_servers=recursor_servers)
     elif request.method == 'POST':
         pdns_api_url = request.form.get('pdns_api_url')
         pdns_api_key = request.form.get('pdns_api_key')
         pdns_version = request.form.get('pdns_version')
-
+        recursor_servers = request.form.get('recursor_servers')
+        recursor_api_key = request.form.get('recursor_api_key')
         Setting().set('pdns_api_url', pdns_api_url)
         Setting().set('pdns_api_key', pdns_api_key)
         Setting().set('pdns_version', pdns_version)
-
+        Setting().set('recursor_servers', recursor_servers)
+        Setting().set('recursor_api_key', recursor_api_key)
         return render_template('admin_setting_pdns.html',
                                pdns_api_url=pdns_api_url,
                                pdns_api_key=pdns_api_key,
-                               pdns_version=pdns_version)
-
+                               pdns_version=pdns_version,
+                               recursor_api_key=recursor_api_key,
+                               recursor_servers=recursor_servers)
 
 @admin_bp.route('/setting/dns-records', methods=['GET', 'POST'])
 @login_required
