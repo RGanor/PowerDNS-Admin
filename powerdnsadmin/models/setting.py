@@ -33,6 +33,8 @@ class Setting(db.Model):
         'warn_session_timeout': True,
         'pdns_api_url': '',
         'pdns_api_key': '',
+        'recursor_servers': '',
+        'recursor_api_key': '',
         'pdns_api_timeout': 30,
         'pdns_version': '4.1.1',
         'verify_ssl_connections': True,
