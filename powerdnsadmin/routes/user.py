@@ -1,7 +1,4 @@
 import datetime
-import qrcode as qrc
-import qrcode.image.svg as qrc_svg
-from io import BytesIO
 from flask import Blueprint, request, render_template, make_response, jsonify, redirect, url_for, g, session, current_app
 from flask_login import current_user, login_required, login_manager
 
@@ -41,13 +38,10 @@ def profile():
         return render_template('user_profile.html')
     if request.method == 'POST':
         if session['authentication_type'] == 'LOCAL':
-            firstname = request.form[
-                'firstname'] if 'firstname' in request.form else ''
-            lastname = request.form[
-                'lastname'] if 'lastname' in request.form else ''
-            email = request.form['email'] if 'email' in request.form else ''
-            new_password = request.form[
-                'password'] if 'password' in request.form else ''
+            firstname = request.form.get('firstname', '').strip()
+            lastname = request.form.get('lastname', '').strip()
+            email = request.form.get('email', '').strip()
+            new_password = request.form.get('password', '')
         else:
             firstname = lastname = email = new_password = ''
             current_app.logger.warning(
@@ -97,11 +91,7 @@ def qrcode():
     if not current_user:
         return redirect(url_for('index'))
 
-    img = qrc.make(current_user.get_totp_uri(),
-                   image_factory=qrc_svg.SvgPathImage)
-    stream = BytesIO()
-    img.save(stream)
-    return stream.getvalue(), 200, {
+    return current_user.get_qrcode_value(), 200, {
         'Content-Type': 'image/svg+xml',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',

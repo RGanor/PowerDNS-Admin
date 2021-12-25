@@ -23,6 +23,7 @@ css_login = Bundle('node_modules/bootstrap/dist/css/bootstrap.css',
 js_login = Bundle('node_modules/jquery/dist/jquery.js',
                   'node_modules/bootstrap/dist/js/bootstrap.js',
                   'node_modules/icheck/icheck.js',
+                  'custom/js/custom.js',
                   filters=(ConcatFilter, 'jsmin'),
                   output='generated/login.js')
 
@@ -39,6 +40,7 @@ css_main = Bundle(
     'node_modules/admin-lte/dist/css/AdminLTE.css',
     'node_modules/admin-lte/dist/css/skins/_all-skins.css',
     'custom/css/custom.css',
+    'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
     filters=('cssmin', 'cssrewrite'),
     output='generated/main.css')
 
@@ -58,6 +60,7 @@ js_main = Bundle('node_modules/jquery/dist/jquery.js',
                  'node_modules/jtimeout/src/jTimeout.js',
                  'node_modules/jquery.quicksearch/src/jquery.quicksearch.js',
                  'custom/js/custom.js',
+                 'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
                  filters=(ConcatFilter, 'jsmin'),
                  output='generated/main.js')
 

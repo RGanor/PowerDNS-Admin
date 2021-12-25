@@ -53,6 +53,7 @@ function applyRecordChanges(data, domain) {
             var modal = $("#modal_success");
             modal.find('.modal-body p').text("Applied changes successfully");
             modal.modal('show');
+            setTimeout(() => {window.location.reload()}, 2000);
         },
 
         error : function(jqXHR, status) {
@@ -285,3 +286,13 @@ function timer(elToUpdate, maxTime) {
 
     return interval;
 }
+
+// copy otp secret code to clipboard
+function copy_otp_secret_to_clipboard() {
+    var copyBox = document.getElementById("otp_secret");
+    copyBox.select();
+    copyBox.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(copyBox.value);
+    $("#copy_tooltip").css("visibility", "visible");
+    setTimeout(function(){ $("#copy_tooltip").css("visibility", "collapse"); }, 2000);
+  }
